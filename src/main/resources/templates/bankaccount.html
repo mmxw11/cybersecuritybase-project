@@ -21,7 +21,7 @@
             <h2 th:inline="text">Bank account: [[${bankAccount.accountNumber}]]</h2>
             <p th:inline="text">Owner: [[${bankAccount.owner.username}]]</p>
             <div class="container"> TEST </div>
-            <a th:href="@{/account/{username}(username=${bankAccount.owner.username})}">Back to all accounts</a>
+            <a th:href="@{/user/{username}(username=${bankAccount.owner.username})}">Back to all accounts</a>
         </main>
     </body>
 </html>

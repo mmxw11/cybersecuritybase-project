@@ -10,12 +10,12 @@ public class BankAccount extends AbstractPersistable<Long> {
 
     private String accountNumber;
     @ManyToOne
-    private Account owner;
+    private BankUser owner;
     private Double balance;
 
     public BankAccount() {}
 
-    public BankAccount(String accountNumber, Account owner, Double balance) {
+    public BankAccount(String accountNumber, BankUser owner, Double balance) {
         this.accountNumber = accountNumber;
         this.owner = owner;
         this.balance = balance;
@@ -29,11 +29,11 @@ public class BankAccount extends AbstractPersistable<Long> {
         this.accountNumber = accountNumber;
     }
 
-    public Account getOwner() {
+    public BankUser getOwner() {
         return owner;
     }
 
-    public void setOwner(Account owner) {
+    public void setOwner(BankUser owner) {
         this.owner = owner;
     }
 

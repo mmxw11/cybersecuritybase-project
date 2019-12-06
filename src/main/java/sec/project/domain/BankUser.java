@@ -8,16 +8,16 @@ import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
-public class Account extends AbstractPersistable<Long> {
+public class BankUser extends AbstractPersistable<Long> {
 
     private String username;
     private String password;
     @OneToMany(mappedBy = "owner")
     private List<BankAccount> bankAccounts;
 
-    public Account() {}
+    public BankUser() {}
 
-    public Account(String username, String password) {
+    public BankUser(String username, String password) {
         this.username = username;
         this.password = password;
     }

@@ -13,33 +13,33 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import sec.project.domain.Account;
-import sec.project.repository.AccountRepository;
+import sec.project.domain.BankUser;
+import sec.project.repository.UserRepository;
 
 @Service
 public class DbUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
     @PostConstruct
     public void init() {
-        accountRepository.save(new Account("admin", passwordEncoder.encode("testi")));
-        accountRepository.save(new Account("ted", passwordEncoder.encode("testi")));
-        accountRepository.save(new Account("jack", passwordEncoder.encode("testi")));
+        userRepository.save(new BankUser("admin", passwordEncoder.encode("testi")));
+        userRepository.save(new BankUser("ted", passwordEncoder.encode("testi")));
+        userRepository.save(new BankUser("jack", passwordEncoder.encode("testi")));
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findByUsername(username);
-        if (account == null) {
+        BankUser bankUser = userRepository.findByUsername(username);
+        if (bankUser == null) {
             throw new UsernameNotFoundException("No such user: " + username);
         }
         return new User(
                 username,
-                account.getPassword(),
+                bankUser.getPassword(),
                 true,
                 true,
                 true,

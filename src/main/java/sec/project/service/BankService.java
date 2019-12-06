@@ -3,25 +3,25 @@ package sec.project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sec.project.domain.Account;
 import sec.project.domain.BankAccount;
-import sec.project.repository.AccountRepository;
+import sec.project.domain.BankUser;
 import sec.project.repository.BankAccountRepository;
+import sec.project.repository.UserRepository;
 
 @Service
 public class BankService {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private UserRepository userRepository;
     @Autowired
     private BankAccountRepository bankAccountRepository;
 
     public BankAccount createBankAccount(String accountNumber, long ownerId) {
-        Account account = accountRepository.findOne(ownerId);
-        if (account == null) {
-            throw new NullPointerException("account");
+        BankUser owner = userRepository.findOne(ownerId);
+        if (owner == null) {
+            throw new NullPointerException("owner");
         }
-        BankAccount bankAccount = new BankAccount(accountNumber, account, 100D);
+        BankAccount bankAccount = new BankAccount(accountNumber, owner, 100D);
         return bankAccountRepository.save(bankAccount);
     }
 }
