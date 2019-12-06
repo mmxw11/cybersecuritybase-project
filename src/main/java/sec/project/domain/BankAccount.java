@@ -1,12 +1,14 @@
 package sec.project.domain;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
-public class BankAccount extends AbstractPersistable<Long> {
+public class BankAccount extends AbstractPersistable<UUID> {
 
     private String accountNumber;
     @ManyToOne

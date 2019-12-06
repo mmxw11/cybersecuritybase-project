@@ -31,7 +31,8 @@ h6 {
 }
 
 button,
-input {
+input,
+select {
     font: inherit;
 }
 
@@ -57,4 +58,25 @@ header {
 
 .logout-button {
     margin-right: 5px;
+}
+
+form input,
+form select {
+    margin: 5px 0;
+    min-width: 200px;
+    box-sizing: border-box;
+}
+
+form label {
+    display: block;
+}
+
+.container {
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #f2f2f2;
+}
+
+.container .ctitle {
+    margin-bottom: 10px;
 }

@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Hello world</title>
+        <meta charset="UTF-8">
+        <title>Profile</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
         <link rel="stylesheet" type="text/css" th:href="@{/static/main.css}" />
         <style>
-            #bankaccount-list {
-                margin-top: 30px;
-                padding: 10px;
-                background-color: #f2f2f2;
-            }
-
             #bankaccount-list li {
                 padding: 10px;
                 border-radius: 15px;
@@ -34,12 +30,8 @@
                 filter: brightness(95%);
             }
 
-            #new-bankaccount-container {
+            #admin-only-title {
                 margin-top: 150px;
-            }
-
-            #new-bankaccount-container label {
-                display: block;
             }
         </style>
     </head>
@@ -52,21 +44,24 @@
         </header>
         <main>
             <h2 th:inline="text">[[${user.username}]]'s bank accounts</h2>
-            <ul id="bankaccount-list">
+            <ul id="bankaccount-list" class="container">
                 <p th:if="${user.bankAccounts.size()} == 0">No bank accounts found :/</p>
                 <li th:each="bankaccount : ${user.bankAccounts}">
-                    <a th:href="@{/bankaccount/{accountNumber}(accountNumber=${bankaccount.accountNumber})}">
+                    <a th:href="@{/bankaccount/{uuid}(uuid=${bankaccount.id})}">
                         <p class="bankaccount-number" th:text="${bankaccount.accountNumber}">accountNumber</p>
                         <p th:inline="text">Balance [[${bankaccount.balance}]]€</p>
                     </a>
                 </li>
             </ul>
-            <div id="new-bankaccount-container">
-                <h3>Create a new bank account</h3>
+            <h2 id="admin-only-title">Admin only zone</h2>
+            <div id="new-bankaccount-container" class="container">
+                <h3 class="ctitle">Create a new bank account</h3>
                 <form th:action="@{/createbankaccount}" th:method="POST">
                     <label for="accountNumber">Account Number</label>
-                    <input type="text" name="accountNumber" />
-                    <input type="hidden" name="owner" th:value="${user.id}" />
+                    <input type="text" name="accountNumber" required="true" />
+                    <label for="owner">Owner username</label>
+                    <input type="text" name="owner" required="true" />
+                    <!--TODO: DROPDOWN MENU OF USERSinput type="hidden" name="owner" th:value="${user.id}" /-->
                     <button type="submit">Create</button>
                 </form>
             </div>
