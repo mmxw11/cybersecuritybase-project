@@ -1,0 +1,41 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300,400&display=swap);
+
+html {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+}
+
+main {
+    /* IE fix (IE doesn't support main.) */
+    display: block;
+    color: white;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    line-height: 1.5;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+
+ol,
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}

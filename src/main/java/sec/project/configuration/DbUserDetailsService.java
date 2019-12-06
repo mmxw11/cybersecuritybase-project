@@ -1,4 +1,4 @@
-package sec.project.config;
+package sec.project.configuration;
 
 import java.util.Arrays;
 

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Hello world</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/main.css}" />
+    </head>
+    <body>
+        <form th:action="@{/logout}" th:method="POST">
+            <button type="submit">Logout</button>
+        </form>
+        <h2 th:inline="text">[[${bankAccount.accountNumber}]]</h2>
+    </body>
+</html>

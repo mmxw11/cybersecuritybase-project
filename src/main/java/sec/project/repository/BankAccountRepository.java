@@ -5,4 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import sec.project.domain.BankAccount;
 
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
+
+    BankAccount findByAccountNumber(String accountNumber);
+
+    BankAccount findByAccountNumberIgnoreCase(String accountNumber);
 }
