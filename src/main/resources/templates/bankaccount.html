@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Hello world</title>
+        <title>Bank Account</title>
         <link rel="stylesheet" type="text/css" th:href="@{/static/main.css}" />
+        <style>
+            .container {
+                margin-top: 50px;
+                background-color: #f2f2f2;
+            }
+        </style>
     </head>
     <body>
-        <form th:action="@{/logout}" th:method="POST">
-            <button type="submit">Logout</button>
-        </form>
-        <h2 th:inline="text">[[${bankAccount.accountNumber}]]</h2>
+        <header>
+            <form th:action="@{/logout}" th:method="POST" class="logout-button">
+                <button type="submit">Log out</button>
+            </form>
+            <p th:inline="text">Logged in as [[${auser.username}]]</p>
+        </header>
+        <main>
+            <h2 th:inline="text">Bank account: [[${bankAccount.accountNumber}]]</h2>
+            <p th:inline="text">Owner: [[${bankAccount.owner.username}]]</p>
+            <div class="container"> TEST </div>
+            <a th:href="@{/account/{username}(username=${bankAccount.owner.username})}">Back to all accounts</a>
+        </main>
     </body>
 </html>

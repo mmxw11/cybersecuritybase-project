@@ -13,7 +13,10 @@ body {
 main {
     /* IE fix (IE doesn't support main.) */
     display: block;
-    color: white;
+    max-width: 1500px;
+    padding: 0 10px;
+    margin: 50px auto 0;
+    color: black;
 }
 
 p,
@@ -38,4 +41,20 @@ ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
+}
+
+header {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #1e7bd2;
+    height: 60px;
+    color: white;
+    padding: 0 10px;
+    font-size: .95rem;
+}
+
+.logout-button {
+    margin-right: 5px;
 }

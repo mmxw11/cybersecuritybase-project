@@ -29,11 +29,12 @@ public class AccountController {
     }
 
     @GetMapping("/account/{username}")
-    public String index(@PathVariable String username, Model model) {
+    public String viewAccountProfile(@PathVariable String username, Model model) {
         Account account = accountRepository.findByUsername(username);
         if (account == null) {
             throw new RuntimeException("Account not found!");
         }
+        model.addAttribute("auser", accountService.getAuthenticatedUser());
         model.addAttribute("account", account);
         return "account";
     }

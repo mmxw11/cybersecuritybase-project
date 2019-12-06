@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import sec.project.domain.BankAccount;
 import sec.project.repository.BankAccountRepository;
+import sec.project.service.AccountService;
 import sec.project.service.BankService;
 
 @Controller
@@ -18,6 +19,8 @@ public class BankAccountController {
 
     @Autowired
     private BankAccountRepository bankAccountRepository;
+    @Autowired
+    private AccountService accountService;
     @Autowired
     private BankService bankService;
 
@@ -28,8 +31,9 @@ public class BankAccountController {
     }
 
     @GetMapping("/bankaccount/{accountNumber}")
-    public String bankAccount(@PathVariable String accountNumber, Model model) {
+    public String viewBankAccount(@PathVariable String accountNumber, Model model) {
         BankAccount bankAccount = bankAccountRepository.findByAccountNumberIgnoreCase(accountNumber);
+        model.addAttribute("auser", accountService.getAuthenticatedUser());
         model.addAttribute("bankAccount", bankAccount);
         return "bankaccount";
     }
