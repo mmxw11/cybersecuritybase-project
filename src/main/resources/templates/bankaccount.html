@@ -26,20 +26,20 @@
             <p th:inline="text">Logged in as [[${auser.username}]]</p>
         </header>
         <main>
-            <h2 th:inline="text">Bank account: [[${bankAccount.accountNumber}]]</h2>
+            <h2 th:inline="text">Bank account: [[${bankAccount.iban}]]</h2>
             <p th:inline="text">Owner: [[${bankAccount.owner.username}]]</p>
             <p th:inline="text" id="balance-text">Account balance: [[${bankAccount.balance}]]€</p>
             <div class="container">
                 <h3 class="ctitle">Transfer funds</h3>
                 <form th:action="@{/transferfunds}" th:method="POST">
                     <div>
-                        <label for="to">Transfer to</label>
-                        <select name="to" required="true">
+                        <label for="idTo">Transfer to</label>
+                        <select name="idTo" required="true">
                             <option th:each="tbankAccount : ${bankAccounts}" th:value="${tbankAccount.id}" th:inline="text">
-                                [[${tbankAccount.owner.username}]] - [[${tbankAccount.accountNumber}]] </option>
+                                [[${tbankAccount.owner.username}]] - [[${tbankAccount.iban}]] </option>
                         </select>
                     </div>
-                    <input type="hidden" name="from" th:value="${bankAccount.id}" />
+                    <input type="hidden" name="idFrom" th:value="${bankAccount.id}" />
                     <div>
                         <label for="amount">Amount</label>
                         <input type="number" name="amount" required="true" />

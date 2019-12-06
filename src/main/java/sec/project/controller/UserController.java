@@ -13,7 +13,7 @@ import sec.project.repository.UserRepository;
 import sec.project.service.AuthService;
 
 @Controller
-public class BankUserController {
+public class UserController {
 
     @Autowired
     private UserRepository userRepository;

@@ -10,25 +10,25 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class BankAccount extends AbstractPersistable<UUID> {
 
-    private String accountNumber;
+    private String iban;
     @ManyToOne
     private BankUser owner;
     private Double balance;
 
     public BankAccount() {}
 
-    public BankAccount(String accountNumber, BankUser owner, Double balance) {
-        this.accountNumber = accountNumber;
+    public BankAccount(String iban, BankUser owner, Double balance) {
+        this.iban = iban;
         this.owner = owner;
         this.balance = balance;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public String getIban() {
+        return iban;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
     public BankUser getOwner() {

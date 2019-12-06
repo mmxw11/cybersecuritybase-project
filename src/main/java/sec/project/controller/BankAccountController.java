@@ -26,24 +26,25 @@ public class BankAccountController {
     @Autowired
     private BankService bankService;
 
-    @RequestMapping(value = "/createbankaccount", method = RequestMethod.POST) // TODO: UPDATE
-    public String createBankAccount(@RequestParam String accountNumber, @RequestParam long owner) {
-        if (accountNumber.trim().isEmpty()) {
-            throw new IllegalArgumentException("Account Number cannot be empty!");
+    // TODO: UPDATE, change these paths
+    @RequestMapping(value = "/createbankaccount", method = RequestMethod.POST)
+    public String createBankAccount(@RequestParam String iban, @RequestParam long owner) {
+        if (iban.trim().isEmpty()) {
+            throw new IllegalArgumentException("IBAN cannot be empty!");
         }
-        BankAccount bankAccount = bankService.createBankAccount(accountNumber, owner);
+        BankAccount bankAccount = bankService.createBankAccount(iban, owner);
         return "redirect:/bankaccount/" + bankAccount.getId();
     }
 
     @RequestMapping(value = "/transferfunds", method = RequestMethod.POST)
-    public String transferFunds(@RequestParam UUID to, @RequestParam UUID from, @RequestParam double amount, @RequestParam String message) {
-        bankService.transferFunds(to, from, amount, message);
-        return "redirect:/bankaccount/" + from;
+    public String transferFunds(@RequestParam UUID idTo, @RequestParam UUID idFrom, @RequestParam double amount, @RequestParam String message) {
+        bankService.transferFunds(idTo, idFrom, amount, message);
+        return "redirect:/bankaccount/" + idFrom;
     }
 
-    @GetMapping("/bankaccount/{uuid}")
-    public String viewBankAccount(@PathVariable UUID uuid, Model model) {
-        BankAccount bankAccount = bankAccountRepository.findById(uuid).orElse(null);
+    @GetMapping("/bankaccount/{id}")
+    public String viewBankAccount(@PathVariable UUID id, Model model) {
+        BankAccount bankAccount = bankAccountRepository.findById(id).orElse(null);
         if (bankAccount == null) {
             throw new NullPointerException("Bank Account not found");
         }

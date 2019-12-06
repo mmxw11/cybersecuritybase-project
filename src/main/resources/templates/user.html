@@ -17,7 +17,7 @@
                 text-decoration: none;
             }
 
-            .bankaccount-number {
+            .iban {
                 font-weight: 700;
             }
 
@@ -47,8 +47,8 @@
             <ul id="bankaccount-list" class="container">
                 <p th:if="${user.bankAccounts.size()} == 0">No bank accounts found :/</p>
                 <li th:each="bankaccount : ${user.bankAccounts}">
-                    <a th:href="@{/bankaccount/{uuid}(uuid=${bankaccount.id})}">
-                        <p class="bankaccount-number" th:text="${bankaccount.accountNumber}">accountNumber</p>
+                    <a th:href="@{/bankaccount/{id}(id=${bankaccount.id})}">
+                        <p class="iban" th:text="${bankaccount.iban}">iban</p>
                         <p th:inline="text">Balance [[${bankaccount.balance}]]€</p>
                     </a>
                 </li>
@@ -57,11 +57,11 @@
             <div id="new-bankaccount-container" class="container">
                 <h3 class="ctitle">Create a new bank account</h3>
                 <form th:action="@{/createbankaccount}" th:method="POST">
-                    <label for="accountNumber">Account Number</label>
-                    <input type="text" name="accountNumber" required="true" />
+                    <label for="iban">IBAN</label>
+                    <input type="text" name="iban" required="true" />
                     <label for="owner">Owner username</label>
                     <input type="text" name="owner" required="true" />
-                    <!--TODO: DROPDOWN MENU OF USERSinput type="hidden" name="owner" th:value="${user.id}" /-->
+                    <!--TODO: DROPDOWN MENU OF USERS, admin panel, account historyinput type="hidden" name="owner" th:value="${user.id}" /-->
                     <button type="submit">Create</button>
                 </form>
             </div>
