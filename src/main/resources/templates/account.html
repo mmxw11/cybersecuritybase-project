@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title >Hello world</title>
+    </head>
+    <body>
+        <h1 th:inline="text">[[${account.username}]]'s bank accounts</h1>
+        <p th:if="${account.bankAccounts.size()} == 0">You have no bank accounts :/</p>
+        <ul>
+            <li th:each="bankaccount : ${account.bankAccounts}">
+                <h3 th:text="${bankaccount.accountNumber}">accountNumber</h3>
+                <p th:inline="text">Balance [[${bankaccount.balance}]]€</p>
+            </li>
+        </ul>
+        <form th:action="@{/logout}" th:method="POST">
+            <button type="submit">Logout</button>
+        </form>
+    </body>
+</html>
