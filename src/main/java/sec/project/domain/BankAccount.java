@@ -7,6 +7,10 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+/**
+ * A Bank account to store money.
+ * User can have multiple bank accounts, but a specific bank account always belong to one user.
+ */
 @Entity
 public class BankAccount extends AbstractPersistable<UUID> {
 

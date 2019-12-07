@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Profile</title>
+        <title>User</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
         <link rel="stylesheet" type="text/css" th:href="@{/static/main.css}" />
         <style>
@@ -53,6 +53,7 @@
                     </a>
                 </li>
             </ul>
+            <!-- TODO -->
             <h2 id="admin-only-title">Admin only zone</h2>
             <div id="new-bankaccount-container" class="container">
                 <h3 class="ctitle">Create a new bank account</h3>
@@ -61,7 +62,7 @@
                     <input type="text" name="iban" required="true" />
                     <label for="owner">Owner username</label>
                     <input type="text" name="owner" required="true" />
-                    <!--TODO: DROPDOWN MENU OF USERS, admin panel, account historyinput type="hidden" name="owner" th:value="${user.id}" /-->
+                    <!--TODO: DROPDOWN MENU OF USERS, admin panel, forms input type="hidden" name="owner" th:value="${user.id}" /-->
                     <button type="submit">Create</button>
                 </form>
             </div>

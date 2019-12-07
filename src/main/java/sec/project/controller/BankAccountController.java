@@ -26,14 +26,14 @@ public class BankAccountController {
     @Autowired
     private BankService bankService;
 
-    // TODO: UPDATE, change these paths
+    // TODO: ADMIN PANEL, FORMS
     @RequestMapping(value = "/createbankaccount", method = RequestMethod.POST)
     public String createBankAccount(@RequestParam String iban, @RequestParam long owner) {
         if (iban.trim().isEmpty()) {
             throw new IllegalArgumentException("IBAN cannot be empty!");
         }
-        BankAccount bankAccount = bankService.createBankAccount(iban, owner);
-        return "redirect:/bankaccount/" + bankAccount.getId();
+        // BankAccount bankAccount = bankService.createBankAccount(iban, owner);
+        return "redirect:/";// bankaccount/" + bankAccount.getId();
     }
 
     @RequestMapping(value = "/transferfunds", method = RequestMethod.POST)
@@ -50,6 +50,7 @@ public class BankAccountController {
         }
         model.addAttribute("auser", authService.getAuthenticatedUser());
         model.addAttribute("bankAccount", bankAccount);
+        model.addAttribute("transactionHistory", bankService.getBankAccountTransactionHistory(bankAccount));
         model.addAttribute("bankAccounts", bankAccountRepository.findAll());
         return "bankaccount";
     }

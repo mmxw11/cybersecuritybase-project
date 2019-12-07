@@ -16,6 +16,52 @@
                 width: 100%;
                 box-sizing: border-box;
             }
+
+            #back-button {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .transaction {
+                border-radius: 15px;
+                padding: 10px;
+                background-color: white;
+            }
+
+            .transaction-title {
+                display: flex;
+                align-items: center;
+                background-color: #1e7bd2;
+                justify-content: space-between;
+                padding: 10px;
+                color: white;
+                font-weight: 700;
+            }
+
+            .transaction-record-title {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 5px 10px 0;
+                font-weight: 700;
+            }
+
+            .transaction-message {
+                padding: 0 10px;
+            }
+
+            .transaction-message.user-msg-title {
+                font-weight: 700;
+                margin-top: 5px;
+            }
+
+            .transaction-amount.plus {
+                color: #73AD21;
+            }
+
+            .transaction-amount.negative {
+                color: #D55246;
+            }
         </style>
     </head>
     <body>
@@ -51,7 +97,30 @@
                     <button type="submit">Submit</button>
                 </form>
             </div>
-            <a th:href="@{/user/{username}(username=${bankAccount.owner.username})}">Back to all accounts</a>
+            <div class="container">
+                <h3 class="ctitle">Transaction history</h3>
+                <ul>
+                    <p th:if="${transactionHistory.size()} == 0">No transaction records found :/</p>
+                    <li class="transaction" th:each="transaction : ${transactionHistory}">
+                        <div class="transaction-title">
+                            <p th:inline="text">Transaction (Id: [[${transaction.id}]])</p>
+                            <p th:text="${#temporals.format(transaction.date, 'dd.MM.yyyy HH:mm')}">Date</p>
+                        </div>
+                        <div class="transaction-record-title">
+                            <p>Record</p>
+                            <p class="transaction-amount plus" th:if="${transaction.target == bankAccount}" th:inline="text">
+                                +[[${transaction.amount}]]€</p>
+                            <p class="transaction-amount negative" th:if="${transaction.source == bankAccount}" th:inline="text">
+                                -[[${transaction.amount}]]€</p>
+                        </div>
+                        <p class="transaction-message" th:text="${transaction.actionMessage}"></p>
+                        <p class="transaction-message user-msg-title">User message</p>
+                        <p class="transaction-message" th:if="${transaction.userMessage.isEmpty()}">No message available.</p>
+                        <p class="transaction-message" th:if="${!transaction.userMessage.isEmpty()}" th:text="${transaction.userMessage}">user message</p>
+                    </li>
+                </ul>
+            </div>
+            <a id="back-button" th:href="@{/user/{username}(username=${bankAccount.owner.username})}">Back to all accounts</a>
         </main>
     </body>
 </html>
