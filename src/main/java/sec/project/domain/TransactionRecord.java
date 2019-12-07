@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
@@ -20,6 +21,7 @@ public class TransactionRecord extends AbstractPersistable<Long> {
     private BankAccount target;
     private Double amount;
     private String actionMessage;
+    @Type(type = "org.hibernate.type.TextType")
     private String userMessage;
     private LocalDateTime date;
 

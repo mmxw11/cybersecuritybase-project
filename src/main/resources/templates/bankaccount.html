@@ -23,8 +23,8 @@
             }
 
             .transaction {
-                border-radius: 15px;
-                padding: 10px;
+                padding-bottom: 10px;
+                margin-bottom: 15px;
                 background-color: white;
             }
 
@@ -48,6 +48,7 @@
 
             .transaction-message {
                 padding: 0 10px;
+                word-break: break-all;
             }
 
             .transaction-message.user-msg-title {
@@ -66,10 +67,14 @@
     </head>
     <body>
         <header>
-            <form th:action="@{/logout}" th:method="POST" class="logout-button">
-                <button type="submit">Log out</button>
-            </form>
-            <p th:inline="text">Logged in as [[${auser.username}]]</p>
+            <h1 id="app-title">Banking system</h1>
+            <div id="header-items">
+                <button class="header-button" onclick="location.href='/adminpanel'">Admin panel</button>
+                <form th:action="@{/logout}" th:method="POST" class="header-button">
+                    <button type="submit">Log out</button>
+                </form>
+                <p class="header-button" th:inline="text">Logged in as [[${auser.username}]]</p>
+            </div>
         </header>
         <main>
             <!-- Account info -->
@@ -79,7 +84,8 @@
             <!-- Fund transfer -->
             <div class="container">
                 <h3 class="ctitle">Transfer funds</h3>
-                <p class="form-error" th:if="${(param.transferFail != null) and (param.transferFail[0] == 'true')}">Fund transfer did not succeed.</p>
+                <p class="form-error main" th:if="${(param.transferFail != null) and (param.transferFail[0] == 'true')}">Fund transfer did not
+                    succeed.</p>
                 <form th:action="@{/transferfunds}" th:method="POST">
                     <div>
                         <label for="idTo">Transfer to</label>
@@ -91,7 +97,7 @@
                     <input type="hidden" name="idFrom" th:value="${bankAccount.id}" />
                     <div>
                         <label for="amount">Amount</label>
-                        <input type="number" name="amount" required="true" />
+                        <input type="number" name="amount" min=".01" step=".01" required="true" />
                         <p class="form-error" th:if="${transferFailAmount != null}" th:text="${transferFailAmount}"></p>
                     </div>
                     <div>
@@ -104,8 +110,8 @@
             <!-- Transaction history -->
             <div class="container">
                 <h3 class="ctitle">Transaction history</h3>
+                <p th:if="${transactionHistory.size()} == 0">No records were found :/</p>
                 <ul>
-                    <p th:if="${transactionHistory.size()} == 0">No records were found :/</p>
                     <li class="transaction" th:each="transaction : ${transactionHistory}">
                         <div class="transaction-title">
                             <p th:inline="text">Transaction (Id: [[${transaction.id}]])</p>

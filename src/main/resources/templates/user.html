@@ -6,28 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
         <link rel="stylesheet" type="text/css" th:href="@{/static/main.css}" />
         <style>
-            #bankaccount-list li {
-                padding: 10px;
-                border-radius: 15px;
-                margin: 10px;
-                background: #1e7bd2;
-            }
-
-            #bankaccount-list li a {
-                text-decoration: none;
-            }
-
             .iban {
                 font-weight: 700;
-            }
-
-            #bankaccount-list li p {
-                color: white;
-            }
-
-            #bankaccount-list li:hover {
-                cursor: pointer;
-                filter: brightness(95%);
             }
 
             #admin-only-title {
@@ -37,24 +17,31 @@
     </head>
     <body>
         <header>
-            <form th:action="@{/logout}" th:method="POST" class="logout-button">
-                <button type="submit">Log out</button>
-            </form>
-            <p th:inline="text">Logged in as [[${auser.username}]]</p>
+            <h1 id="app-title">Banking system</h1>
+            <div id="header-items">
+                <button class="header-button" onclick="location.href='/adminpanel'">Admin panel</button>
+                <form th:action="@{/logout}" th:method="POST" class="header-button">
+                    <button type="submit">Log out</button>
+                </form>
+                <p class="header-button" th:inline="text">Logged in as [[${auser.username}]]</p>
+            </div>
         </header>
         <main>
             <h2 th:inline="text">[[${user.username}]]'s bank accounts</h2>
-            <ul id="bankaccount-list" class="container">
+            <div class="container">
                 <p th:if="${user.bankAccounts.size()} == 0">No bank accounts were found :/</p>
-                <li th:each="bankaccount : ${user.bankAccounts}">
-                    <a th:href="@{/bankaccount/{id}(id=${bankaccount.id})}">
-                        <p class="iban" th:text="${bankaccount.iban}">iban</p>
-                        <p th:inline="text">Balance [[${bankaccount.balance}]]€</p>
-                    </a>
-                </li>
-            </ul>
+                <ul id="account-list">
+                    <li th:each="bankaccount : ${user.bankAccounts}">
+                        <a th:href="@{/bankaccount/{id}(id=${bankaccount.id})}">
+                            <p class="iban" th:text="${bankaccount.iban}">iban</p>
+                            <p th:inline="text">Balance [[${bankaccount.balance}]]€</p>
+                            <p class="manage-text">Click to manage</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
             <!-- TODO -->
-            <h2 id="admin-only-title">Admin only zone</h2>
+            <h3 id="admin-only-title">Admin only zone</h3>
             <div id="new-bankaccount-container" class="container">
                 <h3 class="ctitle">Create a new bank account</h3>
                 <form th:action="@{/createbankaccount}" th:method="POST">
@@ -62,7 +49,7 @@
                     <input type="text" name="iban" required="true" />
                     <label for="owner">Owner username</label>
                     <input type="text" name="owner" required="true" />
-                    <!--TODO: DROPDOWN MENU OF USERS, admin panel, input type="hidden" name="owner" th:value="${user.id}" /-->
+                    <!--TODO: new bank accounts, set money, credit cards? input type="hidden" name="owner" th:value="${user.id}" /-->
                     <button type="submit">Create</button>
                 </form>
             </div>

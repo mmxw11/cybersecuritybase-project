@@ -29,7 +29,6 @@ public class BankAccountController {
     @Autowired
     private BankService bankService;
 
-    // TODO: ADMIN PANEL, FORMS
     @RequestMapping(value = "/createbankaccount", method = RequestMethod.POST)
     public String createBankAccount(@RequestParam String iban, @RequestParam long owner) {
         if (iban.trim().isEmpty()) {

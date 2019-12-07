@@ -1,7 +1,5 @@
 package sec.project.controller;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -21,9 +19,6 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private AuthService authService;
-
-    @PostConstruct
-    public void init() {}
 
     @GetMapping("/")
     public String index() {
