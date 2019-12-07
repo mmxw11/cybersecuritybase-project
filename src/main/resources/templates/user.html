@@ -45,7 +45,7 @@
         <main>
             <h2 th:inline="text">[[${user.username}]]'s bank accounts</h2>
             <ul id="bankaccount-list" class="container">
-                <p th:if="${user.bankAccounts.size()} == 0">No bank accounts found :/</p>
+                <p th:if="${user.bankAccounts.size()} == 0">No bank accounts were found :/</p>
                 <li th:each="bankaccount : ${user.bankAccounts}">
                     <a th:href="@{/bankaccount/{id}(id=${bankaccount.id})}">
                         <p class="iban" th:text="${bankaccount.iban}">iban</p>
@@ -62,7 +62,7 @@
                     <input type="text" name="iban" required="true" />
                     <label for="owner">Owner username</label>
                     <input type="text" name="owner" required="true" />
-                    <!--TODO: DROPDOWN MENU OF USERS, admin panel, forms input type="hidden" name="owner" th:value="${user.id}" /-->
+                    <!--TODO: DROPDOWN MENU OF USERS, admin panel, input type="hidden" name="owner" th:value="${user.id}" /-->
                     <button type="submit">Create</button>
                 </form>
             </div>

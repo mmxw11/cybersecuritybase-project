@@ -71,6 +71,11 @@ form label {
     display: block;
 }
 
+.form-error {
+    color: #D55246;
+    font-weight: 700;
+}
+
 .container {
     margin-top: 30px;
     padding: 10px;
