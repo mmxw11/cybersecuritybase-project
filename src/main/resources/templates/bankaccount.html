@@ -80,7 +80,7 @@
                 <form th:action="@{/transferfunds}" th:method="POST">
                     <div>
                         <label for="idTo">Transfer to</label>
-                        <select name="idTo" required="true">
+                        <select name="idTo" required>
                             <option th:each="tbankAccount : ${bankAccounts}" th:value="${tbankAccount.id}" th:inline="text">
                                 [[${tbankAccount.owner.username}]] - [[${tbankAccount.iban}]] </option>
                         </select>
@@ -88,12 +88,12 @@
                     <input type="hidden" name="idFrom" th:value="${bankAccount.id}" />
                     <div>
                         <label for="amount">Amount</label>
-                        <input type="number" name="amount" min=".01" step=".01" required="true" />
+                        <input type="number" name="amount" min=".01" step=".01" required />
                         <p class="form-error" th:if="${transferFailAmount != null}" th:text="${transferFailAmount}"></p>
                     </div>
                     <div>
                         <label for="message">Message</label>
-                        <textarea id="transfer-msgbox" rows="6" name="message" required="true"></textarea>
+                        <textarea id="transfer-msgbox" rows="6" name="message" required></textarea>
                     </div>
                     <button type="submit">Submit</button>
                 </form>
@@ -104,7 +104,7 @@
                 <form th:action="@{/updatebankaccountbalance}" th:method="POST">
                     <div>
                         <label for="balance">Balance</label>
-                        <input type="number" name="balance" min="0" step=".01" required="true" />
+                        <input type="number" name="balance" min="0" step=".01" required />
                     </div>
                     <input type="hidden" name="bankAccountId" th:value="${bankAccount.id}" />
                     <button type="submit">Submit</button>

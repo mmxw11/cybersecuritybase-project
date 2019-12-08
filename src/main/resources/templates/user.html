@@ -35,12 +35,12 @@
                 <form th:action="@{/createbankaccount}" th:method="POST">
                     <div>
                         <label for="iban">IBAN</label>
-                        <input type="text" name="iban" required="true" />
+                        <input type="text" name="iban" required />
                         <p class="form-error" th:if="${bankAccountCreateFailIban != null}" th:text="${bankAccountCreateFailIban}"></p>
                     </div>
                     <div>
                         <label for="balance">Balance</label>
-                        <input type="number" name="balance" min="0" step=".01" required="true" />
+                        <input type="number" name="balance" min="0" step=".01" required />
                     </div>
                     <input type="hidden" name="ownerUsername" th:value="${user.username}" />
                     <button type="submit">Submit</button>
