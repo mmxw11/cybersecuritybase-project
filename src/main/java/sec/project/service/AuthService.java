@@ -5,6 +5,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import sec.project.configuration.DbUserDetailsService;
+
+/**
+ * This service provides access to the currently authenticated Spring user.
+ * I.e. the user we logged in with. Created in {@link DbUserDetailsService#loadUserByUsername(String)}
+ */
 @Service
 public class AuthService {
 

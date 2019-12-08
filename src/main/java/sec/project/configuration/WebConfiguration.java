@@ -6,11 +6,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * This class will map the static resource folder in src/main/resources/ so it can be accessed.
+ * This class maps the static resource folder in src/main/resources/ so it can be accessed.
  */
 @Configuration
 @EnableWebMvc
-public class WebConfiguration implements WebMvcConfigurer {// extends WebMvcConfigurerAdapter {
+public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

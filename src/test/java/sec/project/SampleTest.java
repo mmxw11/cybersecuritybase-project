@@ -16,8 +16,6 @@ public class SampleTest {
 
     @Autowired
     private WebApplicationContext webAppContext;
-    // @Autowired
-    // private SignupRepository signupRepository;
     private MockMvc mockMvc;
 
     @Before
@@ -26,10 +24,5 @@ public class SampleTest {
     }
 
     @Test
-    public void signupAddsDataToDatabase() throws Throwable {
-        // mockMvc.perform(post("/form").param("name", "Testname").param("address",
-        // "Testaddress")).andReturn();
-        // assertEquals(1L, signupRepository.findAll().stream().filter(s ->
-        // s.getName().equals("Testname") && s.getAddress().equals("Testaddress")).count());
-    }
+    public void noTests() throws Throwable {}
 }

@@ -34,7 +34,6 @@ public class BankService {
     @Autowired
     private AuthService authService;
 
-    @Transactional
     public BankAccount createBankAccount(String iban, String ownerUsername, double balance, RedirectAttributes rdAttributes) {
         BankUser owner = userRepository.findByUsername(ownerUsername);
         if (owner == null) {
@@ -45,6 +44,10 @@ public class BankService {
             rdAttributes.addFlashAttribute("bankAccountCreateFailIban", "IBAN is already used!");
             return new BankAccount(null, owner, balance);
         }
+        // TODO: VIEW AUTHORIZATION
+        // METHOD AUTHORIZATION
+        // ADMIN GROUP
+        // DONE?
         // String actionMessage = "A new bank account created with the balance " + balance + "€.";
         // TransactionRecord record = new TransactionRecord(null, bankAccount, balance,
         // actionMessage, "", LocalDateTime.now());
