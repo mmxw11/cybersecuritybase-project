@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Bank Account</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-        <link rel="stylesheet" type="text/css" th:href="@{/static/main.css}" />
+        <link rel="stylesheet" type="text/css" th:href="@{/static/main.css}">
         <style>
             #balance-text {
                 margin: 25px 0;
@@ -66,16 +66,7 @@
         </style>
     </head>
     <body>
-        <header>
-            <h1 id="app-title">Banking system</h1>
-            <div id="header-items">
-                <button class="header-button" onclick="location.href='/adminpanel'">Admin panel</button>
-                <form th:action="@{/logout}" th:method="POST" class="header-button">
-                    <button type="submit">Log out</button>
-                </form>
-                <p class="header-button" th:inline="text">Logged in as [[${auser.username}]]</p>
-            </div>
-        </header>
+        <div th:replace="fragments/main :: master-head"></div>
         <main>
             <!-- Account info -->
             <h2 th:inline="text">Bank account: [[${bankAccount.iban}]]</h2>

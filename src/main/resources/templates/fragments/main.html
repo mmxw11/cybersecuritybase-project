@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    </head>
+    <body>
+        <!-- Thymeleaf header fragment. This is included on every page -->
+        <div th:fragment="master-head" th:remove="tag">
+            <noscript>You must have JavaScript enabled for this page to function properly.</noscript>
+            <header>
+                <h1 id="app-title">Banking system</h1>
+                <div id="header-items">
+                    <button class="header-button" th:data-location="@{/adminpanel}"
+                        onclick="window.location.href=this.getAttribute('data-location')">Admin panel</button>
+                    <button class="header-button" th:data-location="@{/}" onclick="window.location.href=this.getAttribute('data-location')">My
+                        pofile</button>
+                    <form th:action="@{/logout}" th:method="POST" class="header-button">
+                        <button type="submit">Log out</button>
+                    </form>
+                    <p class="header-button" th:inline="text">Logged in as [[${auser.username}]]</p>
+                </div>
+            </header>
+        </div>
+    </body>
+</html>

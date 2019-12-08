@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>User</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-        <link rel="stylesheet" type="text/css" th:href="@{/static/main.css}" />
+        <link rel="stylesheet" type="text/css" th:href="@{/static/main.css}">
         <style>
             .iban {
                 font-weight: 700;
@@ -12,19 +12,7 @@
         </style>
     </head>
     <body>
-        <header>
-            <h1 id="app-title">Banking system</h1>
-            <div id="header-items">
-                <button class="header-button" th:data-location="@{/adminpanel}"
-                    onclick="window.location.href=this.getAttribute('data-location')">Admin panel</button>
-                <button class="header-button" th:data-location="@{/}" onclick="window.location.href=this.getAttribute('data-location')">My
-                    pofile</button>
-                <form th:action="@{/logout}" th:method="POST" class="header-button">
-                    <button type="submit">Log out</button>
-                </form>
-                <p class="header-button" th:inline="text">Logged in as [[${auser.username}]]</p>
-            </div>
-        </header>
+        <div th:replace="fragments/main :: master-head"></div>
         <main>
             <h2 th:inline="text">[[${user.username}]]'s bank accounts</h2>
             <div class="container">
