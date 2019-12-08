@@ -9,17 +9,16 @@
             .iban {
                 font-weight: 700;
             }
-
-            #admin-only-title {
-                margin-top: 150px;
-            }
         </style>
     </head>
     <body>
         <header>
             <h1 id="app-title">Banking system</h1>
             <div id="header-items">
-                <button class="header-button" onclick="location.href='/adminpanel'">Admin panel</button>
+                <button class="header-button" th:data-location="@{/adminpanel}"
+                    onclick="window.location.href=this.getAttribute('data-location')">Admin panel</button>
+                <button class="header-button" th:data-location="@{/}" onclick="window.location.href=this.getAttribute('data-location')">My
+                    pofile</button>
                 <form th:action="@{/logout}" th:method="POST" class="header-button">
                     <button type="submit">Log out</button>
                 </form>
@@ -40,17 +39,23 @@
                     </li>
                 </ul>
             </div>
-            <!-- TODO -->
-            <h3 id="admin-only-title">Admin only zone</h3>
-            <div id="new-bankaccount-container" class="container">
-                <h3 class="ctitle">Create a new bank account</h3>
+            <!-- Admin only zone -->
+            <div class="container">
+                <h3 class="ctitle">Create a new bank account (Admin only)</h3>
+                <p class="form-error main" th:if="${(param.bankAccountCreateFail != null) and (param.bankAccountCreateFail[0] == 'true')}">Bank acount
+                    creation did not succeed.</p>
                 <form th:action="@{/createbankaccount}" th:method="POST">
-                    <label for="iban">IBAN</label>
-                    <input type="text" name="iban" required="true" />
-                    <label for="owner">Owner username</label>
-                    <input type="text" name="owner" required="true" />
-                    <!--TODO: new bank accounts, set money, credit cards? input type="hidden" name="owner" th:value="${user.id}" /-->
-                    <button type="submit">Create</button>
+                    <div>
+                        <label for="iban">IBAN</label>
+                        <input type="text" name="iban" required="true" />
+                        <p class="form-error" th:if="${bankAccountCreateFailIban != null}" th:text="${bankAccountCreateFailIban}"></p>
+                    </div>
+                    <div>
+                        <label for="balance">Balance</label>
+                        <input type="number" name="balance" min="0" step=".01" required="true" />
+                    </div>
+                    <input type="hidden" name="ownerUsername" th:value="${user.username}" />
+                    <button type="submit">Submit</button>
                 </form>
             </div>
         </main>

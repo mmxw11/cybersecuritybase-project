@@ -73,7 +73,7 @@ header {
 form input,
 form select {
     margin: 5px 0;
-    min-width: 200px;
+    min-width: 250px;
     box-sizing: border-box;
 }
 
@@ -103,7 +103,7 @@ form label {
 #account-list>li {
     padding: 10px;
     border-radius: 15px;
-    margin: 10px;
+    margin: 15px 0;
     background: #1e7bd2;
 }
 

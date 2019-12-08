@@ -35,17 +35,36 @@ public class BankService {
     private AuthService authService;
 
     @Transactional
-    public BankAccount createBankAccount(String iban, double balance, long ownerId) {
-        BankUser owner = userRepository.findById(ownerId).orElse(null);
+    public BankAccount createBankAccount(String iban, String ownerUsername, double balance, RedirectAttributes rdAttributes) {
+        BankUser owner = userRepository.findByUsername(ownerUsername);
         if (owner == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
-        BankAccount bankAccount = bankAccountRepository.save(new BankAccount(iban, owner, balance));
+        if (bankAccountRepository.findByIbanIgnoreCase(iban) != null) {
+            rdAttributes.addAttribute("bankAccountCreateFail", true);
+            rdAttributes.addFlashAttribute("bankAccountCreateFailIban", "IBAN is already used!");
+            return new BankAccount(null, owner, balance);
+        }
         // String actionMessage = "A new bank account created with the balance " + balance + "€.";
         // TransactionRecord record = new TransactionRecord(null, bankAccount, balance,
         // actionMessage, "", LocalDateTime.now());
         // trecordRepository.save(record);
-        return bankAccount;
+        // TODO: //xxs (message),
+        // injection (login),
+        // access controler (other accounts, adminpanel),
+        // Security Misconfiguration (admin, admin account),
+        // Sensitive Data Exposure passwords plaintext
+        // Broken Authentication session ids
+        return bankAccountRepository.save(new BankAccount(iban, owner, balance));
+    }
+
+    public BankAccount updateBalance(UUID bankAccountId, double balance) {
+        BankAccount bankAccount = bankAccountRepository.findById(bankAccountId).orElse(null);
+        if (bankAccount == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bank Account not found");
+        }
+        bankAccount.setBalance(balance);
+        return bankAccountRepository.save(bankAccount);
     }
 
     @Transactional

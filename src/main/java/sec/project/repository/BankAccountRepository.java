@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import sec.project.domain.BankAccount;
 
 public interface BankAccountRepository extends JpaRepository<BankAccount, UUID> {
-    
+
     List<BankAccount> findAllByIdNot(UUID id);
+
+    BankAccount findByIbanIgnoreCase(String iban);
 }

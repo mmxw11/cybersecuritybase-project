@@ -107,6 +107,19 @@
                     <button type="submit">Submit</button>
                 </form>
             </div>
+            <!-- Admin only zone -->
+            <div class="container">
+                <h3 class="ctitle">Update balance (Admin only)</h3>
+                <form th:action="@{/updatebankaccountbalance}" th:method="POST">
+                    <div>
+                        <label for="balance">Balance</label>
+                        <input type="number" name="balance" min="0" step=".01" required="true" />
+                    </div>
+                    <input type="hidden" name="bankAccountId" th:value="${bankAccount.id}" />
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <!-- End of Admin only zone -->
             <!-- Transaction history -->
             <div class="container">
                 <h3 class="ctitle">Transaction history</h3>

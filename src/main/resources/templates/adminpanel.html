@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
         <link rel="stylesheet" type="text/css" th:href="@{/static/main.css}" />
         <style>
-            #registered-users-title {
+            #manage-users-title {
                 margin-top: 25px;
             }
 
@@ -29,7 +29,7 @@
         <main>
             <h2>Welcome to the admin panel!</h2>
             <p>Here you can see all of your customers and manage their banking accounts.</p>
-            <h3 id="registered-users-title">Registered users</h3>
+            <h3 id="manage-users-title">Manage users</h3>
             <div class="container">
                 <p th:if="${registeredUsers.size()} == 0">No users were found :/</p>
                 <ul id="account-list">

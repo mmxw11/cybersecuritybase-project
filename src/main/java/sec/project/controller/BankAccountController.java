@@ -30,12 +30,24 @@ public class BankAccountController {
     private BankService bankService;
 
     @RequestMapping(value = "/createbankaccount", method = RequestMethod.POST)
-    public String createBankAccount(@RequestParam String iban, @RequestParam long owner) {
-        if (iban.trim().isEmpty()) {
-            throw new IllegalArgumentException("IBAN cannot be empty!");
+    public String createBankAccount(@RequestParam String iban, @RequestParam double balance, @RequestParam String ownerUsername, RedirectAttributes rdAttributes) {
+        if (iban.trim().isEmpty() || ownerUsername.isEmpty()) {
+            throw new IllegalArgumentException("IBAN or owner cannot be empty!");
         }
-        // BankAccount bankAccount = bankService.createBankAccount(iban, owner);
-        return "redirect:/";// bankaccount/" + bankAccount.getId();
+        if (balance < 0) {
+            throw new IllegalArgumentException("Balance cannot be negative!");
+        }
+        BankAccount bankAccount = bankService.createBankAccount(iban, ownerUsername, balance, rdAttributes);
+        if (bankAccount.isNew()) {
+            return "redirect:/user/" + bankAccount.getOwner().getUsername();
+        }
+        return "redirect:/bankaccount/" + bankAccount.getId();
+    }
+
+    @RequestMapping(value = "/updatebankaccountbalance", method = RequestMethod.POST)
+    public String updateBalance(@RequestParam UUID bankAccountId, @RequestParam double balance) {
+        BankAccount bankAccount = bankService.updateBalance(bankAccountId, balance);
+        return "redirect:/bankaccount/" + bankAccount.getId();
     }
 
     @RequestMapping(value = "/transferfunds", method = RequestMethod.POST)
