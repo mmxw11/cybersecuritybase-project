@@ -28,7 +28,7 @@
                 </ul>
             </div>
             <!-- Admin only zone -->
-            <div class="container">
+            <div class="container" sec:authorize="hasRole('ROLE_ADMIN')">
                 <h3 class="ctitle">Create a new bank account (Admin only)</h3>
                 <p class="form-error main" th:if="${(param.bankAccountCreateFail != null) and (param.bankAccountCreateFail[0] == 'true')}">Bank acount
                     creation did not succeed.</p>

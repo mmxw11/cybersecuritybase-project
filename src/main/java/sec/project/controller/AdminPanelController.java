@@ -1,6 +1,7 @@
 package sec.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public class AdminPanelController {
     @Autowired
     private UserRepository userRepository;
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/adminpanel")
     public String adminPanel(Model model) {
         model.addAttribute("auser", authService.getAuthenticatedUser());

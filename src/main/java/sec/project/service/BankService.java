@@ -44,20 +44,6 @@ public class BankService {
             rdAttributes.addFlashAttribute("bankAccountCreateFailIban", "IBAN is already used!");
             return new BankAccount(null, owner, balance);
         }
-        // TODO: VIEW AUTHORIZATION
-        // METHOD AUTHORIZATION
-        // ADMIN GROUP
-        // DONE?
-        // String actionMessage = "A new bank account created with the balance " + balance + "€.";
-        // TransactionRecord record = new TransactionRecord(null, bankAccount, balance,
-        // actionMessage, "", LocalDateTime.now());
-        // trecordRepository.save(record);
-        // TODO: //xxs (message),
-        // injection (login),
-        // access controler (other accounts, adminpanel),
-        // Security Misconfiguration (admin, admin account),
-        // Sensitive Data Exposure passwords plaintext
-        // Broken Authentication session ids
         return bankAccountRepository.save(new BankAccount(iban, owner, balance));
     }
 
@@ -77,6 +63,7 @@ public class BankService {
         if (toAccount == null || fromAccount == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bank Account not found");
         }
+        checBankAccountAccessPermission(fromAccount);
         if (fromAccount.getBalance() - amount < 0) {
             rdAttributes.addAttribute("transferFail", true);
             rdAttributes.addFlashAttribute("transferFailAmount", "You don't have enough money!");
@@ -87,6 +74,13 @@ public class BankService {
         trecordRepository.save(new TransactionRecord(fromAccount, toAccount, amount, actionMessage, message, LocalDateTime.now()));
         fromAccount.setBalance(fromAccount.getBalance() - amount);
         toAccount.setBalance(toAccount.getBalance() + amount);
+    }
+
+    public void checBankAccountAccessPermission(BankAccount bankAccount) {
+        // Check if admin or the user is also the owner of this bank account.
+        if (!authService.isAuthenticatedUserAdmin() && !bankAccount.getOwner().equals(authService.getAuthenticatedBankUser())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
     }
 
     public List<TransactionRecord> getBankAccountTransactionHistory(BankAccount bankAccount) {

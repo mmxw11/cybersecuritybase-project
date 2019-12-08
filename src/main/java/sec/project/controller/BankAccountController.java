@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class BankAccountController {
     @Autowired
     private BankService bankService;
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/createbankaccount", method = RequestMethod.POST)
     public String createBankAccount(@RequestParam String iban, @RequestParam double balance, @RequestParam String ownerUsername, RedirectAttributes rdAttributes) {
         if (iban.trim().isEmpty() || ownerUsername.isEmpty()) {
@@ -44,6 +46,7 @@ public class BankAccountController {
         return "redirect:/bankaccount/" + bankAccount.getId();
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/updatebankaccountbalance", method = RequestMethod.POST)
     public String updateBalance(@RequestParam UUID bankAccountId, @RequestParam double balance) {
         BankAccount bankAccount = bankService.updateBalance(bankAccountId, balance);
@@ -68,6 +71,7 @@ public class BankAccountController {
         if (bankAccount == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bank Account not found");
         }
+        bankService.checBankAccountAccessPermission(bankAccount);
         model.addAttribute("auser", authService.getAuthenticatedUser());
         model.addAttribute("bankAccount", bankAccount);
         model.addAttribute("transactionHistory", bankService.getBankAccountTransactionHistory(bankAccount));

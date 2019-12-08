@@ -3,16 +3,16 @@
     <head>
     </head>
     <body>
-        <!-- Thymeleaf header fragment. This is included on every page -->
+        <!-- Thymeleaf header fragment. This is included on every page. -->
         <div th:fragment="master-head" th:remove="tag">
             <noscript>You must have JavaScript enabled for this page to function properly.</noscript>
             <header>
                 <h1 id="app-title">Banking system</h1>
-                <div id="header-items">
-                    <button class="header-button" th:data-location="@{/adminpanel}"
+                <div id="header-items" sec:authorize="isAuthenticated()">
+                    <button sec:authorize="hasRole('ROLE_ADMIN')" class="header-button" th:data-location="@{/adminpanel}"
                         onclick="window.location.href=this.getAttribute('data-location')">Admin panel</button>
-                    <button class="header-button" th:data-location="@{/}" onclick="window.location.href=this.getAttribute('data-location')">My
-                        pofile</button>
+                    <button class="header-button" th:data-location="@{/user/{username}(username=${auser.username})}"
+                        onclick="window.location.href=this.getAttribute('data-location')">My pofile</button>
                     <form th:action="@{/logout}" th:method="POST" class="header-button">
                         <button type="submit">Log out</button>
                     </form>

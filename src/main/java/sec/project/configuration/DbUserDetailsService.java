@@ -1,10 +1,12 @@
 package sec.project.configuration;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,12 +37,10 @@ public class DbUserDetailsService implements UserDetailsService {
         bankAccountRepository.save(new BankAccount("FI29 000 000 0001", admin, 62D));
         bankAccountRepository.save(new BankAccount("FI29 000 000 0002", admin, 22D));
         bankAccountRepository.save(new BankAccount("FI29 000 000 0003", admin, 928D));
-        
         BankUser ted = new BankUser("ted", passwordEncoder.encode("testi"));
         userRepository.save(ted);
         bankAccountRepository.save(new BankAccount("FI29 0230 0301 000", ted, 4D));
         bankAccountRepository.save(new BankAccount("FI29 000 000 23", ted, 10000.23D));
-        
         BankUser jack = new BankUser("jack", passwordEncoder.encode("testi"));
         userRepository.save(jack);
         bankAccountRepository.save(new BankAccount("FI29 0000 01 0022", jack, .54D));
@@ -52,13 +52,11 @@ public class DbUserDetailsService implements UserDetailsService {
         if (bankUser == null) {
             throw new UsernameNotFoundException("No such user: " + username);
         }
-        return new User(
-                username,
-                bankUser.getPassword(),
-                true,
-                true,
-                true,
-                true,
-                Arrays.asList(new SimpleGrantedAuthority("USER")));
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        if (bankUser.getUsername().equals("admin")) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+        return new User(username, bankUser.getPassword(), true, true, true, true, authorities);
     }
 }

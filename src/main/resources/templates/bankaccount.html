@@ -99,7 +99,7 @@
                 </form>
             </div>
             <!-- Admin only zone -->
-            <div class="container">
+            <div class="container" sec:authorize="hasRole('ROLE_ADMIN')">
                 <h3 class="ctitle">Update balance (Admin only)</h3>
                 <form th:action="@{/updatebankaccountbalance}" th:method="POST">
                     <div>

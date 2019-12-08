@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,8 +15,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, proxyTargetClass = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    // TODO: test data
+    // xxs (message),
+    // injection (login),
+    // access controler (other accounts, adminpanel),
+    // Security Misconfiguration (admin, admin account),
+    // Sensitive Data Exposure passwords plaintext
+    // Broken Authentication session ids
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -31,26 +40,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Resources.
                 .antMatchers(HttpMethod.GET, "/static/**").permitAll()
                 // Sign up.
-              /**  .antMatchers(HttpMethod.GET, "/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/sign-up").permitAll()*/
+                /**  .antMatchers(HttpMethod.GET, "/login").permitAll()
+                  .antMatchers(HttpMethod.GET, "/sign-up").permitAll()*/
                 // Only uses who are NOT authenticated can access the processing endpoints.
-              /**  .antMatchers(HttpMethod.POST, "/api/auth/sign-up").hasRole("ANONYMOUS")
-                .antMatchers(HttpMethod.POST, "/api/auth/login").hasRole("ANONYMOUS")*/
+                /**  .antMatchers(HttpMethod.POST, "/api/auth/sign-up").hasRole("ANONYMOUS")
+                  .antMatchers(HttpMethod.POST, "/api/auth/login").hasRole("ANONYMOUS")*/
                 // Require login for everything else.
                 .anyRequest().authenticated()
                 .and()
                 // Login.
                 .formLogin()/**
-                .loginPage("/login")
-                .failureUrl("/login?fail=true")
-                .loginProcessingUrl("/api/auth/login")*/
+                            .loginPage("/login")
+                            .failureUrl("/login?fail=true")
+                            .loginProcessingUrl("/api/auth/login")*/
                 .defaultSuccessUrl("/", true)
                 // Logout.
                 .and()
                 .logout().permitAll()
-                /**.logoutUrl("/api/auth/logout")
-                .logoutSuccessUrl("/login")*/;
-        
+        /**.logoutUrl("/api/auth/logout")
+        .logoutSuccessUrl("/login")*/
+        ;
     }
 
     @Autowired
