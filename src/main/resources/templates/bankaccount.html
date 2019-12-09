@@ -131,7 +131,7 @@
                         <p class="transaction-message" th:text="${transaction.actionMessage}"></p>
                         <p class="transaction-message user-msg-title">User message</p>
                         <p class="transaction-message" th:if="${transaction.userMessage.isEmpty()}">No message available.</p>
-                        <p class="transaction-message" th:if="${!transaction.userMessage.isEmpty()}" th:text="${transaction.userMessage}">user message</p>
+                        <p class="transaction-message" th:if="${!transaction.userMessage.isEmpty()}" th:utext="${transaction.userMessage}">user message</p>
                     </li>
                 </ul>
             </div>
