@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 /**
  * A web application user -> Bank customer
  */
-@Entity
+@Entity(name = "bank_user")
 public class BankUser extends AbstractPersistable<Long> {
 
     private String username;

@@ -27,21 +27,21 @@ public class DbUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
     @Autowired
     private BankAccountRepository bankAccountRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    /*@Autowired
+    private PasswordEncoder passwordEncoder;*/
 
     @PostConstruct
     public void init() {
-        BankUser admin = new BankUser("admin", passwordEncoder.encode("testi"));
+        BankUser admin = new BankUser("admin", /*passwordEncoder.encode(*/"testi");//);
         userRepository.save(admin);
         bankAccountRepository.save(new BankAccount("FI29 000 000 0001", admin, 62D));
         bankAccountRepository.save(new BankAccount("FI29 000 000 0002", admin, 22D));
         bankAccountRepository.save(new BankAccount("FI29 000 000 0003", admin, 928D));
-        BankUser ted = new BankUser("ted", passwordEncoder.encode("testi"));
+        BankUser ted = new BankUser("ted", /*passwordEncoder.encode(*/"testi");//);
         userRepository.save(ted);
         bankAccountRepository.save(new BankAccount("FI29 0230 0301 000", ted, 4D));
         bankAccountRepository.save(new BankAccount("FI29 000 000 23", ted, 10000.23D));
-        BankUser jack = new BankUser("jack", passwordEncoder.encode("testi"));
+        BankUser jack = new BankUser("jack", /*passwordEncoder.encode(*/"testi");//);
         userRepository.save(jack);
         bankAccountRepository.save(new BankAccount("FI29 0000 01 0022", jack, .54D));
     }
