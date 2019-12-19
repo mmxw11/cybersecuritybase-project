@@ -128,14 +128,14 @@ public PasswordEncoder passwordEncoder() {
 Now passwords will be automatically hashed and salted before they are stored to the database. Accounts that are added to the database with existing passwords should have theirs passwords hashed beforehand.
 
 ### #5 A5:2017-Broken Access Control
-The application doesn’t properly enforce access control. Authenticated users can access other’s profiles, view their balance, and list of bank accounts just by changing the URL regardless of whether they are owner of the account.
+The application doesn’t properly enforce access control. Authenticated users can access other’s profiles, view their banking accoutnts, and transfer funds from their accounts just by changing the URL regardless of whether they are owner of the account.
 
 **Steps to reproduce**
 1.	Open the app in your browser (localhost:8080 default).
 2.	Sign in as Ted.
 3.	View your own profile, and look at the url address which looks as follows http://localhost:8080/user/ted
 5.	Change ted to jack.
-6.	Now you can view their profile which you shouldn’t be able to.
+6.	Now you can view Jack's banking accounts and tranfer funds from them which you shouldn’t be able to.
 
 **Fix**
 
