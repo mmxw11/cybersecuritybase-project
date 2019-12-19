@@ -2,6 +2,7 @@ package sec.project.domain;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity(name = "bank_user")
 public class BankUser extends AbstractPersistable<Long> {
 
+    @Column(unique = true)
     private String username;
     private String password;
     @OneToMany(mappedBy = "owner")
