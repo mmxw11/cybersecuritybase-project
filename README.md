@@ -22,9 +22,9 @@ The application login system is vulnerable to SQL injection attacks. It takes th
 
 1.	Open the app in your browser (localhost:8080 default).
 2.	Username can be anything.
-3.	For the password, write ' OR username='Ted' -- where Ted is the real username of the account you want login to.
+3.	For the password, write ' OR username='Ted' -- where Ted is the real username of the account you want to sign in.
 4.	Click “Sign in”.
-5.	Now you have successfully logged in to someone’s account and can transfer all their money to yours.
+5.	Now you have successfully signed into someone’s account and can transfer all their money to yours.
 
 **Fix**
 
@@ -54,7 +54,7 @@ Bank account transaction history uses th:utext for the user specified message. T
 
 1.	Open the app in your browser (localhost:8080 default).
 2.	Sign in.
-3.	Choose a bank account from the list and click it.
+3.	Choose a bank account from the list and open it.
 4.	Go to the Transfer funds section
 5.	Choose your target’s bank account from the “Transfer to” list.
 6.	Use smallest value possible (0.01) for the amount. We don’t want to give our victim free money.
@@ -67,7 +67,7 @@ Beware! The script will also be executed on your account, so you must add some l
 
 > File: src/main/resources/templates/bankaccount.html#134 line
 
-Change th:utext to th:text under the Transaction History section. Now Thymeleaf will automatically escape the text.
+Change th:utext to th:text under the Transaction History section and Thymeleaf will automatically escape the text.
 
 ### #3 A6:2017 - Security Misconfiguration
 The admin account is using default credentials.
@@ -103,14 +103,16 @@ User credentials are stored in plaintext in the database. This means that if dat
 
 **Steps to reproduce**
 
-1.	This can be verified by looking at the src/main/java/sec/project/configuration/DbAuthenticationProvider.java file.
+1.	This can be verified by looking at the 
+> src/main/java/sec/project/configuration/DbAuthenticationProvider.java file.
 2.	Users and their bank accounts are created in the init method. The passwords are clearly visible.
+3. The authenticate method uses the password for the SQL query without any hashing.
 
 **Fix**
 
 > File: src/main/java/sec/project/configuration/SecurityConfiguration.java
 
-Passwords and other sensitive data should be encrypted and salted before storing them to the database. In case of a leak, they are impossible read. Adding a salt to each password will make cracking them harder. If two users have same passwords and the app doesn’t salt passwords, they end up having same hash in the database. Spring offers an easy way to fix this. All you need to do is use a user details service, add a password encoder to SecurityConfiguration class, and register it to the user details service.
+Passwords and other sensitive data should be hashed and salted before storing them to the database. In case of a leak, they are impossible read. Adding a salt to each password will make cracking them harder. If two users have same passwords and the app doesn’t salt passwords, they end up having same hash in the database. Spring offers an easy way to fix this. All you need to do is use the aforementioned user details service by registering it in SecurityConfiguration class and adding a password encoder.
 ```
 @Autowired
 public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -123,7 +125,7 @@ public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
 }
 ```
-Now passwords will be automatically encrypted and salted before they are stored to the database. Accounts that are added to the database with existing passwords should have theirs encrypted beforehand.
+Now passwords will be automatically hashed and salted before they are stored to the database. Accounts that are added to the database with existing passwords should have theirs passwords hashed beforehand.
 
 ### #5 A5:2017-Broken Access Control
 The application doesn’t properly enforce access control. Authenticated users can access other’s profiles, view their balance, and list of bank accounts just by changing the URL regardless of whether they are owner of the account.
@@ -131,8 +133,7 @@ The application doesn’t properly enforce access control. Authenticated users c
 **Steps to reproduce**
 1.	Open the app in your browser (localhost:8080 default).
 2.	Sign in as Ted.
-3.	Look at the URL bar.
-4.	View your own profile, the url looks as follows http://HOST/user/ted
+3.	View your own profile, and look at the url address which looks as follows http://localhost:8080/user/ted
 5.	Change ted to jack.
 6.	Now you can view their profile which you shouldn’t be able to.
 
@@ -140,13 +141,14 @@ The application doesn’t properly enforce access control. Authenticated users c
 
 > Files: src/main/java/sec/project/controller/UserController.java
 
->src/main/java/sec/project/configuration/SecurityConfiguration
+>src/main/java/sec/project/configuration/SecurityConfiguration.java
 
-The viewUser method must check whether the currently authenticated user is the owner of the requested profile or an admin. This can be achieved with the PreAuthorized annotation and by comparing the supplied username argument to the currently authenticated user’s name as follows
+The viewUser method in UserController must check whether the currently authenticated user is the owner of the requested profile or an admin. This can be achieved with the PreAuthorized annotation by comparing the supplied username argument to the currently authenticated user’s name as follows
 ```
 @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.username==#username")
 ```
-To enable the PreAuthorized annotations, you need to add `@EnableGlobalMethodSecurity` annotation to the src/main/java/sec/project/configuration/SecurityConfiguration class. 
+To enable the PreAuthorized annotations, you need to add `@EnableGlobalMethodSecurity` annotation to the
+> src/main/java/sec/project/configuration/SecurityConfiguration class. 
 ```
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, proxyTargetClass = true)
 ```
