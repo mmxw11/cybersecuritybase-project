@@ -74,7 +74,7 @@ public class BankAccountController {
         if (bankAccount == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bank Account not found");
         }
-        bankService.checBankAccountAccessPermission(bankAccount);
+        // bankService.checBankAccountAccessPermission(bankAccount);
         model.addAttribute("auser", authService.getAuthenticatedUser());
         model.addAttribute("bankAccount", bankAccount);
         model.addAttribute("transactionHistory", bankService.getBankAccountTransactionHistory(bankAccount));

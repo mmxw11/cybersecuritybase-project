@@ -63,7 +63,7 @@ public class BankService {
         if (toAccount == null || fromAccount == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bank Account not found");
         }
-        checBankAccountAccessPermission(fromAccount);
+        //checBankAccountAccessPermission(fromAccount);
         if (fromAccount.getBalance() - amount < 0) {
             rdAttributes.addAttribute("transferFail", true);
             rdAttributes.addFlashAttribute("transferFailAmount", "You don't have enough money!");
