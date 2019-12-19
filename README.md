@@ -1,7 +1,7 @@
 ## Cyber Security Base 2019-2020 Course Project I
 A banking application based on the [project starter template](https://github.com/cybersecuritybase/cybersecuritybase-project). This app uses a SQL database (h2 database engine to exact) and it’s set to in memory only. This means that the database will reset if you restart the app. There are users (customers) with bank accounts. Each user can have multiple bank accounts, and money can be transferred from a bank account to another. There’s also some admin only functionality.
 #### The bank has the following users:
-> username:password
+> username:password (unknown > password not known)
 
 -	Ted:Ted123
 -	Jack:unknown
