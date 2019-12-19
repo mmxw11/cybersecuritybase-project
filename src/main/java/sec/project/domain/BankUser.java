@@ -8,7 +8,7 @@ import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
- * A web application user -> Bank customer
+ * A web application user -> Bank customer.
  */
 @Entity(name = "bank_user")
 public class BankUser extends AbstractPersistable<Long> {

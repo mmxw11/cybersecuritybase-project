@@ -15,6 +15,9 @@ import sec.project.domain.BankUser;
 import sec.project.repository.UserRepository;
 import sec.project.service.AuthService;
 
+/**
+ * User profile controller.
+ */
 @Controller
 public class UserController {
 
@@ -26,6 +29,7 @@ public class UserController {
     @GetMapping("/")
     public String index(HttpServletRequest request) {
         if (request.isUserInRole("ROLE_ADMIN")) {
+            // Redirect admins to admin panel.
             return "redirect:/adminpanel";
         }
         return "redirect:/user/" + authService.getAuthenticatedUser().getUsername();
@@ -34,7 +38,7 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.username==#username")
     @GetMapping("/user/{username}")
     public String viewUser(@PathVariable String username, Model model) {
-        BankUser user = userRepository.findByUsername(username);
+        BankUser user = userRepository.findByUsernameIgnoreCase(username);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }

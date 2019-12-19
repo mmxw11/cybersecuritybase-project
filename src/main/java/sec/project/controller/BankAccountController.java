@@ -20,6 +20,9 @@ import sec.project.repository.BankAccountRepository;
 import sec.project.service.AuthService;
 import sec.project.service.BankService;
 
+/**
+ * This controller handles all banking account related requests. (fund transfers etc)
+ */
 @Controller
 public class BankAccountController {
 

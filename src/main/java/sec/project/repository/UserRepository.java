@@ -7,4 +7,6 @@ import sec.project.domain.BankUser;
 public interface UserRepository extends JpaRepository<BankUser, Long> {
 
     BankUser findByUsername(String username);
+    
+    BankUser findByUsernameIgnoreCase(String username);
 }
