@@ -10,7 +10,7 @@ A banking application based on the [project starter template](https://github.com
 Your name is “Ted” and the password is “Ted123” (without the quotation marks). You are poor and have decided to solve the problem in not so legal way. There also seems to be an administrator account with the username of “admin”, but the password is nowhere near to be found. Gladly for us, seems like someone didn't do such a great job implementing the login system. There also seems to be some security misconfiguration and access control problems which may help you with your path to the rich life. If you want to have a little challenge, try breaking in before checking out the vulnerabilities! :)
 
 #### Install instructions
-You can run the app just like any other course project. Just download the files or clone the repo and open it in your IDE: You can also download the precompiled .jar file and run it directly from command line. Java 8 is the minimum required version.
+You can run the app just like any other course project. Just download the files or clone the repo and open it in your IDE: You can also download the [precompiled .jar file](https://github.com/mmxw11/cybersecuritybase-project/raw/master/cybersecuritybase-project-app.jar) and run it directly from command line. Java 8 is the minimum required version.
 1.	Open terminal in the same directory as where the jar is located.
 2.	Run “java -jar cybersecuritybase-project-app.jar”
 
@@ -46,7 +46,6 @@ Even a better way to fix this would be not to use the password for the database 
 > src/main/java/sec/project/configuration/DbUserDetailsService.java
 
 which can be used as an alternative to replace the faulty DbAuthenticationProvider.
-
 
 ### #2 A7:2017 - Cross-Site Scripting (XSS)
 Bank account transaction history uses th:utext for the user specified message. This means anyone who transfers funds to another user’s bank account can inject XSS to the transaction message which is then executed by the target when they view the bank account.
@@ -85,6 +84,7 @@ The admin account is using default credentials.
 There’s no single way to fix this. For instance, the app may ask system administrator to supply an admin password at first run.
 
 ### #4 A3:2017 - Sensitive Data Exposure
+
 #### #1 Insecure HTTP
 The application uses HTTP and everything is transmitted in plaintext. This means passwords, cookies and everything else are prone for spooning.
 
