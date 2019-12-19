@@ -8,22 +8,19 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
+/**
+ * App security configuration.
+ * Code that is commented out is a secure version.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, proxyTargetClass = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    // TODO: test data
-    // Injection (Broken login), //' OR (1=1 and username='ted') --
-    // TODO: xxs (message),
-    // access controler (other accounts, adminpanel),
-    // Security Misconfiguration (admin, admin account),
-    // Sensitive Data Exposure passwords plaintext
-    // Broken Authentication session ids
-    @Autowired
+    /** @Autowired
     private UserDetailsService userDetailsService;
+    */
     @Autowired
     private DbAuthenticationProvider authProvider;
 
@@ -34,7 +31,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().headers().frameOptions().sameOrigin();
         // sec.csrf().disable();
         sec.authorizeRequests()
-                // H2-console
+                // H2-console This is automatically disabled in production environment by Spring,
+                // therefore this is not a vulnerability.
                 .antMatchers("/h2-console", "/h2-console/**").permitAll()
                 // Resources.
                 .antMatchers(HttpMethod.GET, "/static/**").permitAll()
@@ -45,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Require login for everything else.
                 .anyRequest().authenticated()
                 .and()
-                // Login.
+                // Login form.
                 .formLogin()
                 .usernameParameter("username")
                 .passwordParameter("password")
@@ -62,9 +60,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider);
-        // .userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        /** .userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());*/
     }
-    
     /**
      * @Bean 
      * public PasswordEncoder passwordEncoder() { 
