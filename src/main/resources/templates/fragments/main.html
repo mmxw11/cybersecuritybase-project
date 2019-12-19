@@ -12,7 +12,7 @@
                     <button sec:authorize="hasRole('ROLE_ADMIN')" class="header-button" th:data-location="@{/adminpanel}"
                         onclick="window.location.href=this.getAttribute('data-location')">Admin panel</button>
                     <button class="header-button" th:data-location="@{/user/{username}(username=${auser.username})}"
-                        onclick="window.location.href=this.getAttribute('data-location')">My pofile</button>
+                        onclick="window.location.href=this.getAttribute('data-location')">My profile</button>
                     <form th:action="@{/logout}" th:method="POST" class="header-button">
                         <button type="submit">Log out</button>
                     </form>
