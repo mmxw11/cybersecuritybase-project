@@ -10,7 +10,7 @@ A banking application based on the [project starter template](https://github.com
 Your name is “Ted” and the password is “Ted123” (without the quotation marks). You are poor and have decided to solve the problem in not so legal way. There also seems to be an administrator account with the username of “admin”, but the password is nowhere near to be found. Gladly for us, seems like someone didn't do such a great job implementing the login system. There also seems to be some security misconfiguration and access control problems which may help you with your path to the rich life. If you want to have a little challenge, try breaking in before checking out the vulnerabilities! :)
 
 #### Install instructions
-You can run the app just like any other course project. Just download the files or clone the repo and open it on your IDE: You can also download the precompiled .jar file and run it directly from command line. Java 8 is the minimum required version.
+You can run the app just like any other course project. Just download the files or clone the repo and open it in your IDE: You can also download the precompiled .jar file and run it directly from command line. Java 8 is the minimum required version.
 1.	Open terminal in the same directory as where the jar is located.
 2.	Run “java -jar cybersecuritybase-project-app.jar”
 
